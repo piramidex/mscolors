@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-11-06T15:59:13Z" product-name="mscolors">
+		<header/>
+		<body>
+			<trans-unit id="product_id.description">
+				<source>productId</source>
+			</trans-unit>
+			<trans-unit id="attribute_id.description">
+				<source>attributeId</source>
+			</trans-unit>
+			<trans-unit id="name.description">
+				<source>name</source>
+			</trans-unit>
+			<trans-unit id="code.description">
+				<source>code</source>
+			</trans-unit>
+			<trans-unit id="image.description">
+				<source>image</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
