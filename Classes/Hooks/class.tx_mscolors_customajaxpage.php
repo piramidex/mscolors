@@ -114,6 +114,8 @@
                       $result['success']=true;
                       $result['error']=false;
                       $result['filename']=$filename;
+                      $result['urlColorImage'] = $this->mscolors['image_paths']['colors']['icon'].'/'.$folder.$filename;;
+                      error_log('result: '.print_r($result, true));
                       echo htmlspecialchars(json_encode($result), ENT_NOQUOTES);
                       exit();
                     }

@@ -889,6 +889,7 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
           $html = '
 
           new_attributes_html += \'<td class="product_attribute_color">\';
+          new_attributes_html += \'<img id="tx_mscolors_color_image" src="" />\';
           new_attributes_html += \'<div  id="tx_mscolors_test"> <noscript> <input type="file" name="tx_mscolors_test" accept="image/*" /> </noscript> </div>\';
           new_attributes_html += \'<input type="hidden" name="tx_multishop_pi1[attributes][]" id="tmp_attributes_sb" style="width:200px" />\';
           new_attributes_html += \'<input type="hidden" name="ajax_mscolors_test" value="0" />\';
@@ -921,7 +922,9 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
                   \'</div>\',
                   onComplete: function(id, fileName, responseJSON){
                     var filenameServer = responseJSON["filename"];
+                    var urlColorImage = responseJSON["urlColorImage"];
                     $("#ajax_mscolors_test").val(filenameServer);
+                    $("#tx_mscolors_color_image").attr("src", urlColorImage);
                   },
                   debug: false
                 });
