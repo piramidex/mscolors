@@ -33,3 +33,8 @@ $GLOBALS['TCA']['tx_mscolors_domain_model_colors'] = array(
 		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_mscolors_domain_model_colors.gif'
 	),
 );
+
+require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('mscolors').'/Classes/Hooks/class.tx_mscolors_admineditproductpreproc.php');
+require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('mscolors').'/Classes/Hooks/class.tx_mscolors_customajaxpage.php');
+
+
