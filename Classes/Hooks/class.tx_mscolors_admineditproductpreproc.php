@@ -29,7 +29,7 @@ class tx_mscolors_admineditproductpreproc {
       <input name="options_form" type="hidden" value="1" />
       <script type="text/javascript">
 
-
+      var color_image_id = 1;
 
       jQuery(document).ready(function($) {
 
@@ -107,6 +107,7 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
   $attributes_tab_block .= '
           // init selec2
           select2_sb("#tmp_options_sb", "'.$ref->pi_getLL('admin_label_choose_option').'", "new_product_attribute_options_dropdown", "'.mslib_fe::typolink(',2002', '&tx_multishop_pi1[page_section]=admin_ajax_product_attributes&tx_multishop_pi1[admin_ajax_product_attributes]=get_attributes_options').'");
+          
           select2_values_sb("#tmp_attributes_sb", "'.$ref->pi_getLL('admin_label_choose_attribute').'", "new_product_attribute_values_dropdown", "'.mslib_fe::typolink(',2002', '&tx_multishop_pi1[page_section]=admin_ajax_product_attributes&tx_multishop_pi1[admin_ajax_product_attributes]=get_attributes_values').'");
           event.preventDefault();
         });
@@ -161,10 +162,31 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
             $(this).next().removeAttr("id");
             $(this).next().val("");
           });
+
+
+
+          
+          ';
+
+
+          $attributes_tab_block .= 'var new_attributes_html = \'\'; '.$this->addColorSelector($ref);
+          $attributes_tab_block .= '
+          $(element_cloned).find("td.product_attribute_color").replaceWith(new_attributes_html);
+          ';
+
+
+
+          $attributes_tab_block .= '
           $(element_cloned).find("div.product_attribute_prefix>select").val("+");
           $(element_cloned).find("div.msAttributesField>input").val("0.00");
           // add new shiny cloned attributes row
           $($(this).parent().prev()).append(element_cloned);
+          ';
+
+
+          $attributes_tab_block .= $this->addColorSelectorScript($ref);
+
+          $attributes_tab_block .= '
           // init selec2
           select2_sb(".product_attribute_options" + n, "'.$ref->pi_getLL('admin_label_choose_option').'", "new_product_attribute_options_dropdown", "'.mslib_fe::typolink(',2002', '&tx_multishop_pi1[page_section]=admin_ajax_product_attributes&tx_multishop_pi1[admin_ajax_product_attributes]=get_attributes_options').'");
           select2_values_sb(".product_attribute_values" + n, "'.$ref->pi_getLL('admin_label_choose_attribute').'", "new_product_attribute_values_dropdown", "'.mslib_fe::typolink(',2002', '&tx_multishop_pi1[page_section]=admin_ajax_product_attributes&tx_multishop_pi1[admin_ajax_product_attributes]=get_attributes_values').'");
@@ -873,6 +895,8 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
     // product Attribute eof
 
 
+          error_log('attributes_tab_block: '.$attributes_tab_block);
+
 
     $params['subpartArray']['###INPUT_ATTRIBUTES_BLOCK###'] = $attributes_tab_block;
 
@@ -889,8 +913,8 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
           $html = '
 
           new_attributes_html += \'<td class="product_attribute_color">\';
-          new_attributes_html += \'<img id="tx_mscolors_color_image" src="" />\';
-          new_attributes_html += \'<div  id="tx_mscolors_test"> <noscript> <input type="file" name="tx_mscolors_test" accept="image/*" /> </noscript> </div>\';
+          new_attributes_html += \'<img id="img_color_image_\' + color_image_id + \'" src="" />\';
+          new_attributes_html += \'<div  id="color_image_\' + color_image_id + \'"> <noscript> <input type="file" name="tx_mscolors_test" accept="image/*" /> </noscript> </div>\';
           new_attributes_html += \'<input type="hidden" name="tx_multishop_pi1[attributes][]" id="tmp_attributes_sb" style="width:200px" />\';
           new_attributes_html += \'<input type="hidden" name="ajax_mscolors_test" value="0" />\';
           new_attributes_html += \'</td>\';
@@ -908,12 +932,15 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
     $html = '
 
             var products_name=$("#products_name_0").val();
+            var element = document.getElementById("tx_mscolors_test");
+            var element2 = $("td.product_attribute_color>div", $("#add_attributes_holder"));
             var uploader'.$i.' = new qq.FileUploader({
-                  element: document.getElementById("tx_mscolors_test"),
+                  element: document.getElementById("color_image_" + color_image_id),
                   action: "'.mslib_fe::typolink(',2002', '&tx_multishop_pi1[page_section]=custom_page').'",
                   params: {
                     products_name: products_name,
-                    file_type: "colors_image"
+                    file_type: "colors_image",
+                    color_image_id: color_image_id,
                   },
                   template: \'<div class="qq-uploader">\' +
                   \'<div class="qq-upload-drop-area"><span>'.$ref->pi_getLL('admin_label_drop_files_here_to_upload').'</span></div>\' +
@@ -923,13 +950,18 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
                   onComplete: function(id, fileName, responseJSON){
                     var filenameServer = responseJSON["filename"];
                     var urlColorImage = responseJSON["urlColorImage"];
+                    var color_image_id = responseJSON["colorImageId"];
                     $("#ajax_mscolors_test").val(filenameServer);
-                    $("#tx_mscolors_color_image").attr("src", urlColorImage);
+                    $("#img_color_image_" + color_image_id).attr("src", urlColorImage);
                   },
                   debug: false
                 });
 
+            color_image_id = color_image_id + 1;
+
     ';
+
+
 
     return $html;
 
