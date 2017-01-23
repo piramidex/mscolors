@@ -10,4 +10,6 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/multishop/scripts/admin_pages/inc
 
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/multishop/pi1/classes/class.mslib_fe.php']['customAjaxPage'][] = 'tx_mscolors_customajaxpage->customAjaxPage';
 
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/multishop/scripts/admin_pages/includes/admin_edit_product.php']['updateProductPostHook'][] = 'tx_mscolors_updateproductposthook->updateProductPostHook';
+
 ?>
