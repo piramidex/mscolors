@@ -30,7 +30,7 @@ class tx_mscolors_admineditproductpreproc {
       <input name="options_form" type="hidden" value="1" />
       <script type="text/javascript">
 
-      var color_image_id = 1;
+      var tmp_new_attr_id = 1;
 
       jQuery(document).ready(function($) {
 
@@ -65,11 +65,6 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
 
 
     $attributes_tab_block .= '
-
-
-
-
-
 
           new_attributes_html+=\'<td class="product_attribute_prefix">\';
           new_attributes_html+=\'<select name="tx_multishop_pi1[prefix][]">\';
@@ -405,6 +400,13 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
               $(this).next().val("1");
             } else {
               $(this).next().val("0");
+            }
+          }).on("change", function(e) {
+            if ($(this).select2("data").text.toUpperCase() == "COLOR") {
+              $(this).select2("container").parent().parent().find("input[name*=is_colors]").attr("value", 1);
+            }
+            else {
+              $(this).select2("container").parent().parent().find("input[name*=is_colors]").attr("value", 0);
             }
           });
         }
@@ -750,52 +752,50 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
                 } else {
                   $item_row_type='even_item_row';
                 }
-                $attributes_tab_block.='<div class="wrap-attributes-item '.$item_row_type.'" id="item_product_attribute_'.$attribute_data['products_attributes_id'].'" rel="'.$attribute_data['products_attributes_id'].'">';
-                $attributes_tab_block.='<table>';
-                $attributes_tab_block.='<tr class="option_row">';
+                $attributes_tab_block .= '<div class="wrap-attributes-item '.$item_row_type.'" id="item_product_attribute_'.$attribute_data['products_attributes_id'].'" rel="'.$attribute_data['products_attributes_id'].'">';
+                $attributes_tab_block .= '<table>';
+                $attributes_tab_block .= '<tr class="option_row">';
 
-                $attributes_tab_block.='<td class="product_attribute_option">';
-                $attributes_tab_block.='<input type="hidden" name="tx_multishop_pi1[options][]" id="option_'.$attribute_data['products_attributes_id'].'" class="product_attribute_options" value="'.$option_id.'" style="width:200px" />';
-                $attributes_tab_block.='<input type="hidden" name="tx_multishop_pi1[is_manual_options][]" id="manual_option_'.$attribute_data['products_attributes_id'].'" value="0" />';
-                $attributes_tab_block.='<input type="hidden" name="tx_multishop_pi1[pa_id][]" value="'.$attribute_data['products_attributes_id'].'" />';
-                $attributes_tab_block.='</td>';
+                $attributes_tab_block .= '<td class="product_attribute_option">';
+                $attributes_tab_block .= '<input type="hidden" name="tx_multishop_pi1[options][]" id="option_'.$attribute_data['products_attributes_id'].'" class="product_attribute_options" value="'.$option_id.'" style="width:200px" />';
+                $attributes_tab_block .= '<input type="hidden" name="tx_multishop_pi1[is_manual_options][]" id="manual_option_'.$attribute_data['products_attributes_id'].'" value="0" />';
+                $attributes_tab_block .= '<input type="hidden" name="tx_multishop_pi1[pa_id][]" value="'.$attribute_data['products_attributes_id'].'" />';
+                $attributes_tab_block .= '</td>';
 
-                $attributes_tab_block.='<td class="product_attribute_value">';
-                $attributes_tab_block.='<input type="hidden" name="tx_multishop_pi1[attributes][]" id="attribute_'.$attribute_data['products_attributes_id'].'" class="product_attribute_values" value="'.$attribute_data['options_values_id'].'" style="width:200px" />';
-                $attributes_tab_block.='<input type="hidden" name="tx_multishop_pi1[is_manual_attributes][]" id="manual_attributes_'.$attribute_data['products_attributes_id'].'" value="0" />';
-                $attributes_tab_block.='</td>';
+                $attributes_tab_block .= '<td class="product_attribute_value">';
+                $attributes_tab_block .= '<input type="hidden" name="tx_multishop_pi1[attributes][]" id="attribute_'.$attribute_data['products_attributes_id'].'" class="product_attribute_values" value="'.$attribute_data['options_values_id'].'" style="width:200px" />';
+                $attributes_tab_block .= '<input type="hidden" name="tx_multishop_pi1[is_manual_attributes][]" id="manual_attributes_'.$attribute_data['products_attributes_id'].'" value="0" />';
+                $attributes_tab_block .= '</td>';
 
 
                 // ---- Color image ----
                 if (strcasecmp($option_name, 'color') == 0) {
                   $attributes_tab_block .= '<td class="product_attribute_color">';
-//                $attributes_tab_block .= '<img id="img_color_image_0' + $color_image_id + '" src="" />';
-//                $attributes_tab_block .= '<div  id="color_image_' + $color_image_id + '"> <noscript> <input type="file" name="tx_mscolors_test" accept="image/*" /> </noscript> </div>';
                   $attributes_tab_block .= '<img id="img_color_image_'.$attribute_data['products_attributes_id'].'" src="'.$colors_data[$attribute_data['products_attributes_id']]['image'].'" />';
                   $attributes_tab_block .= '<div  id="color_image_'.$attribute_data['products_attributes_id'].'"> <noscript> <input type="file" name="tx_mscolors_test" accept="image/*" /> </noscript> </div>';
-                  $attributes_tab_block.='<input type="hidden" name="tx_multishop_pi1[attributes_ids][]" value="'.$attribute_data['products_attributes_id'].'" />';
-                  $attributes_tab_block.='<input type="hidden" name="tx_multishop_pi1[colors][]" id="input_color_image_'.$attribute_data['products_attributes_id'].'" value="'.$colors_data[$attribute_data['products_attributes_id']]['image'].'" />';
-                  $attributes_tab_block .= '<input type="hidden" name="tx_multishop_pi1[attributes][]" id="tmp_attributes_sb" style="width:200px" />';
+                  $attributes_tab_block .= '<input type="hidden" name="tx_multishop_pi1[attributes_ids][]" value="'.$attribute_data['products_attributes_id'].'" />';
+                  $attributes_tab_block .= '<input type="hidden" name="tx_multishop_pi1[colors][]" id="input_color_image_'.$attribute_data['products_attributes_id'].'" value="'.$colors_data[$attribute_data['products_attributes_id']]['image'].'" />';
+                  $attributes_tab_block .= '<input type="hidden" name="tx_multishop_pi1[is_colors][]" value="1" />';
                   $attributes_tab_block .= '<input type="hidden" name="ajax_mscolors_test" value="0" />';
                   $attributes_tab_block .= '<script> jQuery(document).ready(function($) { '.$this->addColorSelectorScript2($ref, $attribute_data['products_attributes_id']).' }); </script>';
                   $attributes_tab_block .= '</td>';
-              }
-              else {
-                $attributes_tab_block .= '<td>';
-                //$attributes_tab_block.='<input type="hidden" name="tx_multishop_pi1[attributes_ids][]" value="'.$attribute_data['products_attributes_id'].'" />';
-                //$attributes_tab_block .= '<input type="hidden" name="tx_multishop_pi1[colors][]" id="input_color_image_'.$attribute_data['products_attributes_id'].'" value="no_color" />';
-                $attributes_tab_block .= '</td>';
- 
-              }
-              // -----------------
+                }
+                else {
+                  $attributes_tab_block .= '<td class="product_attribute_color">';
+                  $attributes_tab_block .= '<input type="hidden" name="tx_multishop_pi1[attributes_ids][]" value="'.$attribute_data['products_attributes_id'].'" />';
+                  $attributes_tab_block .= '<input type="hidden" name="tx_multishop_pi1[colors][]" id="input_color_image_'.$attribute_data['products_attributes_id'].'" value="" />';
+                  $attributes_tab_block .= '<input type="hidden" name="tx_multishop_pi1[is_colors][]" value="0" />';
+                  $attributes_tab_block .= '</td>';
+                }
+                // -----------------
 
 
-                $attributes_tab_block.='<td class="product_attribute_prefix">';
-                $attributes_tab_block.='<select name="tx_multishop_pi1[prefix][]">';
-                $attributes_tab_block.='<option value="">&nbsp;</option>';
-                $attributes_tab_block.='<option value="+"'.($attribute_data['price_prefix']=='+' ? ' selected="selected"' : '').'>+</option>';
-                $attributes_tab_block.='<option value="-"'.($attribute_data['price_prefix']=='-' ? ' selected="selected"' : '').'>-</option>';
-                $attributes_tab_block.='</select>';
+                $attributes_tab_block .= '<td class="product_attribute_prefix">';
+                $attributes_tab_block .= '<select name="tx_multishop_pi1[prefix][]">';
+                $attributes_tab_block .= '<option value="">&nbsp;</option>';
+                $attributes_tab_block .= '<option value="+"'.($attribute_data['price_prefix']=='+' ? ' selected="selected"' : '').'>+</option>';
+                $attributes_tab_block .= '<option value="-"'.($attribute_data['price_prefix']=='-' ? ' selected="selected"' : '').'>-</option>';
+                $attributes_tab_block .= '</select>';
                 //$attributes_tab_block.='<input type="text" name="tx_multishop_pi1[prefix][]" value="'.$attribute_data['price_prefix'].'" />';
                 $attributes_tab_block.='</td>';
                 // recalc price to display
@@ -922,40 +922,34 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
 
 
   function addColorSelector(&$ref) {
-
           $i = 'test';
-
           $html = '
-
           new_attributes_html += \'<td class="product_attribute_color">\';
-          new_attributes_html += \'<img id="img_color_image_\' + color_image_id + \'" src="" />\';
-          new_attributes_html += \'<div  id="color_image_\' + color_image_id + \'"> <noscript> <input type="file" name="tx_mscolors_test" accept="image/*" /> </noscript> </div>\';
-          new_attributes_html += \'<input type="hidden" name="tx_multishop_pi1[attributes][]" id="tmp_attributes_sb" style="width:200px" />\';
+          new_attributes_html += \'<img id="img_color_image_\' + tmp_new_attr_id + \'" src="" />\';
+          new_attributes_html += \'<div  id="color_image_\' + tmp_new_attr_id + \'"> <noscript> <input type="file" name="tx_mscolors_test" accept="image/*" /> </noscript> </div>\';
+          new_attributes_html += \'<input type="hidden" name="tx_multishop_pi1[attributes_ids][]" value="" />\';
+          new_attributes_html += \'<input type="hidden" name="tx_multishop_pi1[colors][]" id="input_color_image_\' + tmp_new_attr_id + \'" value="" />\';
+          new_attributes_html += \'<input type="hidden" name="tx_multishop_pi1[is_colors][]" value="0" id="input_is_color_\' + tmp_new_attr_id + \'"/>\';
           new_attributes_html += \'<input type="hidden" name="ajax_mscolors_test" value="0" />\';
           new_attributes_html += \'</td>\';
-
           ';
-
           return $html;
-
   }
 
+
   function addColorSelectorScript(&$ref) {
-
     $i = 'test';
-
     $html = '
-
             var products_name=$("#products_name_0").val();
             var element = document.getElementById("tx_mscolors_test2");
             var element2 = $("td.product_attribute_color>div", $("#add_attributes_holder"));
             var uploader'.$i.' = new qq.FileUploader({
-                  element: document.getElementById("color_image_" + color_image_id),
+                  element: document.getElementById("color_image_" + tmp_new_attr_id),
                   action: "'.mslib_fe::typolink(',2002', '&tx_multishop_pi1[page_section]=custom_page').'",
                   params: {
                     products_name: products_name,
                     file_type: "colors_image",
-                    color_image_id: color_image_id,
+                    color_image_id: tmp_new_attr_id,
                   },
                   template: \'<div class="qq-uploader">\' +
                   \'<div class="qq-upload-drop-area"><span>'.$ref->pi_getLL('admin_label_drop_files_here_to_upload').'</span></div>\' +
@@ -968,18 +962,14 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
                     var color_image_id = responseJSON["colorImageId"];
                     $("#ajax_mscolors_test").val(filenameServer);
                     $("#img_color_image_" + color_image_id).attr("src", urlColorImage);
+                    $("#input_color_image_" + color_image_id).attr("value", urlColorImage);
                   },
                   debug: false
                 });
 
-            color_image_id = color_image_id + 1;
-
+            tmp_new_attr_id = tmp_new_attr_id + 1;
     ';
-
-
-
     return $html;
-
   }
 
 

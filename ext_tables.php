@@ -37,5 +37,6 @@ $GLOBALS['TCA']['tx_mscolors_domain_model_colors'] = array(
 require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('mscolors').'/Classes/Hooks/class.tx_mscolors_admineditproductpreproc.php');
 require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('mscolors').'/Classes/Hooks/class.tx_mscolors_customajaxpage.php');
 require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('mscolors').'/Classes/Hooks/class.tx_mscolors_updateproductposthook.php');
+require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('mscolors').'/Classes/Hooks/class.tx_mscolors_insertproductposthook.php');
 
 

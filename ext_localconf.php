@@ -12,4 +12,6 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/multishop/pi1/classes/class.mslib
 
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/multishop/scripts/admin_pages/includes/admin_edit_product.php']['updateProductPostHook'][] = 'tx_mscolors_updateproductposthook->updateProductPostHook';
 
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/multishop/scripts/admin_pages/includes/admin_edit_product.php']['insertProductPostHook'][] = 'tx_mscolors_insertproductposthook->insertProductPostHook';
+
 ?>
