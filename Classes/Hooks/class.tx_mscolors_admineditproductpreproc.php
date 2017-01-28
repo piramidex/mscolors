@@ -154,31 +154,29 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
             $(this).next().removeAttr("id");
             $(this).next().val("");
           });
-          ';
-
-
-          $attributes_tab_block .= 'var new_attributes_html = \'\'; '.$this->addColorSelector($ref);
-          $attributes_tab_block .= '$(element_cloned).find("td.product_attribute_color").replaceWith(new_attributes_html);';
-          $attributes_tab_block .= '
           $(element_cloned).find("div.product_attribute_prefix>select").val("+");
           $(element_cloned).find("div.msAttributesField>input").val("0.00");
           // add new shiny cloned attributes row
           $($(this).parent().prev()).append(element_cloned);
-          ';
 
-
-          $attributes_tab_block .= $this->addColorSelectorScript($ref);
-
-          $attributes_tab_block .= '
           // init selec2
           select2_sb(".product_attribute_options" + n, "'.$ref->pi_getLL('admin_label_choose_option').'", "new_product_attribute_options_dropdown", "'.mslib_fe::typolink(',2002', '&tx_multishop_pi1[page_section]=admin_ajax_product_attributes&tx_multishop_pi1[admin_ajax_product_attributes]=get_attributes_options').'");
           select2_values_sb(".product_attribute_values" + n, "'.$ref->pi_getLL('admin_label_choose_attribute').'", "new_product_attribute_values_dropdown", "'.mslib_fe::typolink(',2002', '&tx_multishop_pi1[page_section]=admin_ajax_product_attributes&tx_multishop_pi1[admin_ajax_product_attributes]=get_attributes_values').'");
-          event.preventDefault();
+          event.preventDefault();';
 
+          $attributes_tab_block .= 'var new_attributes_html = \'\'; '.$this->addColorSelector($ref);
+          $attributes_tab_block .= '$(element_cloned).find("td.product_attribute_color").replaceWith(new_attributes_html);';
+          $attributes_tab_block .= $this->addColorSelectorScript($ref);
 
+          $attributes_tab_block .= '
           var cloned_option_name = $(element_cloned).find("span[class^=\'select2-chosen\']").html();
           if (cloned_option_name.toUpperCase() == "COLOR") {
             $(element_cloned).find("input[name*=\'is_colors\']").attr("value", "1");
+          }
+          else {
+            $(element_cloned).find("input[name*=\'is_colors\']").attr("value", "0");
+            $(element_cloned).find("img[id*=\'color_image\']").remove();
+            $(element_cloned).find("div[id*=\'color_image\']").remove();
           }
 
         });
