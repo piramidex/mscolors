@@ -924,10 +924,10 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
           $i = 'test';
           $html = '
           new_attributes_html += \'<td class="product_attribute_color">\';
-          new_attributes_html += \'<img id="img_color_image_\' + tmp_new_attr_id + \'" src="" />\';
-          new_attributes_html += \'<div  id="color_image_\' + tmp_new_attr_id + \'"> <noscript> <input type="file" name="tx_mscolors_test" accept="image/*" /> </noscript> </div>\';
-          new_attributes_html += \'<input type="hidden" name="tx_multishop_pi1[colors][]" id="input_color_image_\' + tmp_new_attr_id + \'" value="" />\';
-          new_attributes_html += \'<input type="hidden" name="tx_multishop_pi1[is_colors][]" value="0" id="input_is_color_\' + tmp_new_attr_id + \'"/>\';
+          new_attributes_html += \'<img id="img_color_image_new\' + tmp_new_attr_id + \'" src="" />\';
+          new_attributes_html += \'<div  id="color_image_new\' + tmp_new_attr_id + \'"> <noscript> <input type="file" name="tx_mscolors_test" accept="image/*" /> </noscript> </div>\';
+          new_attributes_html += \'<input type="hidden" name="tx_multishop_pi1[colors][]" id="input_color_image_new\' + tmp_new_attr_id + \'" value="" />\';
+          new_attributes_html += \'<input type="hidden" name="tx_multishop_pi1[is_colors][]" value="0" id="input_is_color_new\' + tmp_new_attr_id + \'"/>\';
           new_attributes_html += \'<input type="hidden" name="ajax_mscolors_test" value="0" />\';
           new_attributes_html += \'</td>\';
           ';
@@ -942,7 +942,7 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
             var element = document.getElementById("tx_mscolors_test2");
             var element2 = $("td.product_attribute_color>div", $("#add_attributes_holder"));
             var uploader'.$i.' = new qq.FileUploader({
-                  element: document.getElementById("color_image_" + tmp_new_attr_id),
+                  element: document.getElementById("color_image_new" + tmp_new_attr_id),
                   action: "'.mslib_fe::typolink(',2002', '&tx_multishop_pi1[page_section]=custom_page').'",
                   params: {
                     products_name: products_name,
@@ -959,8 +959,8 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
                     var urlColorImage = responseJSON["urlColorImage"];
                     var color_image_id = responseJSON["colorImageId"];
                     $("#ajax_mscolors_test").val(filenameServer);
-                    $("#img_color_image_" + color_image_id).attr("src", urlColorImage);
-                    $("#input_color_image_" + color_image_id).attr("value", urlColorImage);
+                    $("#img_color_image_new" + color_image_id).attr("src", urlColorImage);
+                    $("#input_color_image_new" + color_image_id).attr("value", urlColorImage);
                   },
                   debug: false
                 });
