@@ -46,7 +46,7 @@ class tx_mscolors_updateproductposthook {
     error_log('isNewAttribute() - begin');
     error_log('attribute_id: '.$this->post_params['pa_id'][$idx]);
     error_log('isNewAttribute() - end');
-    return $this->post_params['pa_id'][$idx] == "";
+    return ($this->post_params['pa_id'][$idx] == "") || ($this->post_params['pa_id'][$idx] == 0);
   }
 
 

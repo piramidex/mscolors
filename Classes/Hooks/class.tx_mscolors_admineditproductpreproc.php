@@ -58,7 +58,14 @@ class tx_mscolors_admineditproductpreproc {
 
 error_log('addColorSelector returned value: '.$this->addColorSelector($ref));
 
-    $attributes_tab_block .= $this->addColorSelector($ref);
+$attributes_tab_block .= '
+          new_attributes_html += \'<td class="product_attribute_color">\';
+          new_attributes_html += \'<input type="hidden" name="tx_multishop_pi1[colors][]" id="input_color_image_new\' + tmp_new_attr_id + \'" value="" />\';
+          new_attributes_html += \'<input type="hidden" name="tx_multishop_pi1[is_colors][]" value="0" id="input_is_color_new\' + tmp_new_attr_id + \'"/>\';
+          new_attributes_html += \'<input type="hidden" name="ajax_mscolors_test" value="0" />\';
+          new_attributes_html += \'</td>\';
+';
+    //$attributes_tab_block .= $this->addColorSelector($ref);
 
 error_log('attributes_tab_block: '.$attributes_tab_block);
 
@@ -98,7 +105,7 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
           $(\'#add_attributes_holder>td\').html(new_attributes_html);';
 
 
-  $attributes_tab_block .= $this->addColorSelectorScript($ref);
+  //$attributes_tab_block .= $this->addColorSelectorScript($ref);
 
   $attributes_tab_block .= '
           // init selec2
@@ -164,7 +171,7 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
           select2_values_sb(".product_attribute_values" + n, "'.$ref->pi_getLL('admin_label_choose_attribute').'", "new_product_attribute_values_dropdown", "'.mslib_fe::typolink(',2002', '&tx_multishop_pi1[page_section]=admin_ajax_product_attributes&tx_multishop_pi1[admin_ajax_product_attributes]=get_attributes_values').'");
           event.preventDefault();';
 
-          $attributes_tab_block .= 'var new_attributes_html = \'\'; '.$this->addColorSelector($ref);
+          $attributes_tab_block .= 'var new_attributes_html = \'<td class="product_attribute_color">\'; '.$this->addColorSelector($ref).'; new_attributes_html += \'</td>\'; ';
           $attributes_tab_block .= '$(element_cloned).find("td.product_attribute_color").replaceWith(new_attributes_html);';
           $attributes_tab_block .= $this->addColorSelectorScript($ref);
 
@@ -399,10 +406,15 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
             }
           }).on("change", function(e) {
             if ($(this).select2("data").text.toUpperCase() == "COLOR") {
-              $(this).select2("container").parent().parent().find("input[name*=is_colors]").attr("value", 1);
+              $(this).select2("container").parent().parent().find("input[name*=colors]").remove()
+              var new_attributes_html = \'\'; '.$this->addColorSelector($ref).'
+              $(this).select2("container").parent().parent().find("td[class*=\'product_attribute_color\']").prepend(new_attributes_html);
+              '.$this->addColorSelectorScript($ref).'
             }
             else {
               $(this).select2("container").parent().parent().find("input[name*=is_colors]").attr("value", 0);
+              $(this).select2("container").parent().parent().find("img[id*=\'color_image\']").remove();
+              $(this).select2("container").parent().parent().find("div[id*=\'color_image\']").remove();
             }
           });
         }
@@ -919,13 +931,11 @@ error_log('attributes_tab_block: '.$attributes_tab_block);
   function addColorSelector(&$ref) {
           $i = 'test';
           $html = '
-          new_attributes_html += \'<td class="product_attribute_color">\';
           new_attributes_html += \'<img id="img_color_image_new\' + tmp_new_attr_id + \'" src="" />\';
           new_attributes_html += \'<div  id="color_image_new\' + tmp_new_attr_id + \'"> <noscript> <input type="file" name="tx_mscolors_test" accept="image/*" /> </noscript> </div>\';
           new_attributes_html += \'<input type="hidden" name="tx_multishop_pi1[colors][]" id="input_color_image_new\' + tmp_new_attr_id + \'" value="" />\';
-          new_attributes_html += \'<input type="hidden" name="tx_multishop_pi1[is_colors][]" value="0" id="input_is_color_new\' + tmp_new_attr_id + \'"/>\';
+          new_attributes_html += \'<input type="hidden" name="tx_multishop_pi1[is_colors][]" value="1" id="input_is_color_new\' + tmp_new_attr_id + \'"/>\';
           new_attributes_html += \'<input type="hidden" name="ajax_mscolors_test" value="0" />\';
-          new_attributes_html += \'</td>\';
           ';
           return $html;
   }
